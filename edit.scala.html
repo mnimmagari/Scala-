@@ -1,0 +1,198 @@
+@(ideas: List[Idea])(implicit lang: Lang)
+
+@main("application.name") {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ideation Portal - User Registration</title>
+<link rel="stylesheet" media="screen"   href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+<link rel="stylesheet"  media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap-theme.min.css")">
+<script src="@routes.Assets.versioned("https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")"></script>
+<script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
+<script type="text/javascript" src="validate.js"></script>
+
+<script type="text/javascript" >
+function validate(){
+     //first name
+     if (document.forms["myForm"]["firstName"].value == null|| document.forms["myForm"]["firstName"].value == "")
+    {
+            alert("first name required ");
+            document.myForm.firstName.focus();
+            return false;
+    }
+    //last name
+if (document.forms["myForm"]["lastName"].value == null|| document.forms["myForm"]["lastName"].value == "")
+    {
+            alert("lastname name required ");
+            document.myForm.lastName.focus();
+            return false;
+    }
+    //passwords
+    if(document.forms["myForm"]["Password1"].value!=document.forms["myForm"]["Password2"].value){
+        alert("Passwords does not match")
+        return false;
+    }
+    else if(document.forms["myForm"]["Password1"].value!= "" && document.forms["myForm"]["Password1"].value == document.forms["myForm"]["Password2"].value) {
+              if(document.forms["myForm"]["Password1"].value.length < 6) {
+                alert("Error: Password must contain at least six characters!");
+                document.forms["myForm"]["Password1"].value.focus();
+                return false;
+              }
+              re = /[0-9]/;
+              if(!re.test(document.forms["myForm"]["Password1"].value)) {
+                alert("Error: password must contain at least one number (0-9)!");
+                document.forms["myForm"]["Password1"].value.focus();
+                return false;
+              }
+              re = /[a-z]/;
+              if(!re.test(document.forms["myForm"]["Password1"].value)) {
+                alert("Error: password must contain at least one lowercase letter (a-z)!");
+                document.forms["myForm"]["Password1"].value.focus();
+                return false;
+              }
+              re = /[A-Z]/;
+              if(!re.test(document.forms["myForm"]["Password1"].value)) {
+                alert("Error: password must contain at least one uppercase letter (A-Z)!");
+               document.forms["myForm"]["Password1"].value.focus();
+                return false;
+              }
+             /*else {
+              alert("Error: Please check that you've entered incorrect password");
+             document.forms["myForm"]["Password1"].value.focus();
+              return false;
+            }*/
+            return true;
+          }
+    //phone number
+    if (document.forms["myForm"]["phoneNumber"].value== null|| document.forms["myForm"]["phoneNumber"].value== ""|| (isNaN(document.forms["myForm"]["phoneNumber"].value))|| !(document.forms["myForm"]["phoneNumber"].value.length == 10))
+    {
+        alert("Enter a valid mobile number");
+        document.myForm.phoneNumber.focus();
+        return false;
+    }
+    //address
+    if (document.forms["myForm"]["Address"].value == null|| document.forms["myForm"]["Address"].value == "")
+    {
+        alert("provide your Address");
+        document.myForm.Address.focus();
+        return false;
+    }
+    //zip
+    if (document.forms["myForm"]["ZipCode"].value== null|| document.forms["myForm"]["ZipCode"].value.trim() == ""|| (isNaN(document.forms["myForm"]["ZipCode"].value))|| !(document.forms["myForm"]["ZipCode"].value.length == 6))
+    {
+        alert("Enter a valid zip code of 6 digits");
+        document.myForm.ZipCode.focus();
+        return false;
+    }
+    //gender
+   if (document.myForm.gender[0].checked == false && document.myForm.gender[1].checked == false)
+    {
+        alert("Choose your Gender");
+        return false;
+    }
+    //terms n conditions
+      if(document.myForm.news[1].checked == false)
+    {
+        alert("Read and accept the terms & conditions to get registered");
+        return false;
+    }
+
+    
+}
+</script>
+</head>
+<body>
+<div class="bs-example">
+    <h1>Sign Up</h1>
+     <form class="form-horizontal" action=""  name="myForm" method="get" onsubmit="return validate()">
+            
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="firstName">First Name:</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" name="firstname" id="firstName" placeholder="First Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="lastName">Last Name:</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" name="lastname" id="lastName"  placeholder="Last Name">
+            </div>
+        </div>
+        <div class="form-group has-warning has-feedback">
+            <label class="control-label col-xs-3" for="inputPassword">Password:</label>
+            <div class="col-xs-9">
+                <input type="password" class="form-control" id="password" name="Password1" placeholder="Password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="confirmPassword">Confirm Password:</label>
+            <div class="col-xs-9">
+                <input type="password" name="Password2" class="form-control" id="password2" placeholder="Confirm Password"  onchange="check()">
+                <span id='message'></span>
+            </div>
+        </div>
+        
+        <div class="form-group has-error has-feedback">
+            <label class="control-label col-xs-3" for="phoneNumber">Phone:</label>
+            <div class="col-xs-9">
+                <input type="tel" class="form-control" id="phoneNumber" name="phonenumber" placeholder="Phone Number">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="postalAddress">Address:</label>
+            <div class="col-xs-9">
+                <textarea rows="3" name="Address" class="form-control" id="Address" placeholder="Postal Address"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="ZipCode">Zip Code:</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" id="ZipCode" name="zip" placeholder="Zip Code">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">Gender:</label>
+            <div class="col-xs-2">
+                <label class="radio-inline">
+                    <input type="radio" name="gender" value="male"> Male
+                </label>
+            </div>
+            <div class="col-xs-2">
+                <label class="radio-inline">
+                    <input type="radio" name="gender" value="female"> Female
+                </label>
+            </div>
+        </div>
+        <div class="form-group has-success has-feedback">
+            <label class="control-label col-xs-3" for="inputEmail">Email:</label>
+            <div class="col-xs-9">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-9">
+                <label class="checkbox-inline">
+                    <input type="checkbox"  name="news"value="news"> Send me latest news and updates.
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-9">
+                <label class="checkbox-inline">
+                    <input type="checkbox"  name="news" value="agree">  I agree to the <a href="#">Terms and Conditions</a>.
+                </label>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-9">
+                <input type="submit" class="btn btn-primary"  name="submit" value="Submit">
+                <input type="reset" class="btn btn-default" value="Reset">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+} 
